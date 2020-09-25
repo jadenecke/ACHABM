@@ -5,6 +5,11 @@ initiateModel <- function(size, connectionMatrix, dendritesPerNeuronMin, dendrit
   neurons <- lapply(1:sum(size), function(x){list(id = x)})
   names(neurons) <- 1:sum(size)
   neurons <- mapply(c, neurons, area = rep(1:length(size), size), SIMPLIFY = FALSE) #add area id to each neuron
+  if(!is.null(names(size))){
+    neurons <- mapply(c, neurons, areaName = rep(names(size), size), SIMPLIFY = FALSE)
+  } else {
+    neurons <- mapply(c, neurons, areaName = rep(paste0("area_", seq(length(size))), size), SIMPLIFY = FALSE)
+  }
   
   
   conList <- lapply(1:sum(size), function(x){list()})

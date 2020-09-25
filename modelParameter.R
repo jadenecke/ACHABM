@@ -3,21 +3,21 @@
 ##########################################################
 
 #### Model ####
-numberOfSteps <- 2500 #[1 - Inf)
+numberOfSteps <- 3000 #[1 - Inf)
 
 #### Network Generation ####
 
 # Parameter (very - small)
-numberOfCluster <- 2 #number of areas
-clusterMinSize <- 55
-clusterMaxSize <- 70
-synapsesPerDendriteMin <- 8
-synapsesPerDendriteMax <- 11
-dendritesPerNeuronMin <- 4
-dendritesPerNeuronMax <- 5
+# numberOfCluster <- 3 #number of areas
+# clusterMinSize <- 15
+# clusterMaxSize <- 16
+# synapsesPerDendriteMin <- 4
+# synapsesPerDendriteMax <- 4
+# dendritesPerNeuronMin <- 3
+# dendritesPerNeuronMax <- 3
 
 # # Parameter (small)
-# numberOfCluster <- 3 #number of areas
+# numberOfCluster <- 6 #number of areas
 # clusterMinSize <- 90
 # clusterMaxSize <- 120
 # synapsesPerDendriteMin <- 8
@@ -25,14 +25,14 @@ dendritesPerNeuronMax <- 5
 # dendritesPerNeuronMin <- 4
 # dendritesPerNeuronMax <- 6
 
-# # Parameter (medium-small)
-# numberOfCluster <- 3 #number of areas
-# clusterMinSize <- 350
-# clusterMaxSize <- 500
-# synapsesPerDendriteMin <- 20
-# synapsesPerDendriteMax <- 40
-# dendritesPerNeuronMin <- 3
-# dendritesPerNeuronMax <- 7
+# Parameter (medium-small)
+numberOfCluster <- 13 #number of areas
+clusterMinSize <- 90
+clusterMaxSize <- 130
+synapsesPerDendriteMin <- 10
+synapsesPerDendriteMax <- 20
+dendritesPerNeuronMin <- 1
+dendritesPerNeuronMax <- 3
 
 # # Parameter (medium-large)
 # n <- 3 #number of areas
@@ -87,9 +87,9 @@ amyloidMonomerDiffusionInterNeuron_spreadDependencyCurveInflectionPoint <- 6000#
 # curve(L/(1 + exp(-k*(x - x_zero))), 1, 10000) # L = Maxima; k = steepness; x_zero = inflection Point (Wendepunkt)
 
 #### Amyloid Dimer Generation ####
-amyloidDimerGeneration_maximumPercentTransform <- .1# [0:1) precent of monomers that can be converted if load is maximal
+amyloidDimerGeneration_maximumPercentTransform <- .05# [0:1) precent of monomers that can be converted if load is maximal
 amyloidDimerGeneration_probCurveSteepness <- .001 # [0:1] determines the steepness of the logistic curve: values of ~1 or larger result in a sharp cutoff arround the inflection point with lower amyloid load resulting in 0 spread and higher amyloid load resulting in the maximum spread. Values around 0.01 - 0.001 result in a smooth increase within an amyloid range of 0 : 10,000. Also highly depends on the Inflection Point, especially for low amyloid loads, so check the curve carefully
-amyloidDimerGeneration_probCurveInflectionPoint <- 10000 # [1:Inf)
+amyloidDimerGeneration_probCurveInflectionPoint <- 7000 # [1:Inf)
 #curve(.1/(1 + exp(-.001*(x - 3000))), 1, 6000)
 
 ######################################################
@@ -116,49 +116,49 @@ amyloidDimerDiffusionInterNeuron_spreadDependencyCurveInflectionPoint <- 1000# [
 # curve(L/(1 + exp(-k*(x - x_zero))), 1, 10000) # L = Maxima; k = steepness; x_zero =     inflection Point (Wendepunkt)
 
 #### Amyloid Dimer Dissaggregation ####
-amyloidDimerDisaggregation_DisaggregationProbability <- .10 # flat probability of a binomial distribution
+amyloidDimerDisaggregation_DisaggregationProbability <- .01 # flat probability of a binomial distribution
 
 #### Amyloid Aggregate Generation ####
-amyloidAggregateGeneration_aggregateMaxSize <- 24
-amyloidAggregateGeneration_seedingProbabiltyMax <- .03
-amyloidAggregateGeneration_seedingProbabilityCurveSteepness <- .0002
-amyloidAggregateGeneration_seedingProbabilityCurveInflectionPoint <- 12000
+amyloidAggregateGeneration_aggregateMaxSize <- 40
+amyloidAggregateGeneration_seedingProbabiltyMax <- .07
+amyloidAggregateGeneration_seedingProbabilityCurveSteepness <- .0006
+amyloidAggregateGeneration_seedingProbabilityCurveInflectionPoint <- 6000
 #curve(.004/(1 + exp(-.002*(x - 3000))), 1, 10000)
-amyloidAggregateGeneration_aggregateGrowthProbabiltyMax <- .2
-amyloidAggregateGeneration_aggregateGrowthProbabilityCurveSteepness <- .0005
-amyloidAggregateGeneration_aggregateGrowthDelay <- 2000
-amyloidAggregateGeneration_maxDecline <- .1 # [0 - 1], real max Decline seems to be maxDecline/2 as the inflections point for the highest declining curve is at b
-amyloidAggregateGeneration_stability <- 4 # (0 - Inf) stability, hard to describe, but the range of 2-6 seems reasonable, at higher or lower values, the dependencie on the percent saturation becomes neglectable 
+amyloidAggregateGeneration_aggregateGrowthProbabiltyMax <- .99
+amyloidAggregateGeneration_aggregateGrowthProbabilityCurveSteepness <- .003
+amyloidAggregateGeneration_aggregateGrowthDelay <- 1000
+amyloidAggregateGeneration_maxDecline <- .02 # [0 - 1], real max Decline seems to be maxDecline/2 as the inflections point for the highest declining curve is at b
+amyloidAggregateGeneration_stability <- 5 # (0 - Inf) stability, hard to describe, but the range of 2-6 seems reasonable, at higher or lower values, the dependencie on the percent saturation becomes neglectable 
 
 #### Amyloid Plaque Generation ####
-amyloidPlaqueGeneration_plaqueMaximumSize <- 10000000 # [1 , Inf] maximum number of monomer units a plaque can hold
-amyloidPlaqueGeneration_plaqueSeedProbabilityCurveMax <- .0005 # (0 - 1], real max Probability seems to be at x/2
+amyloidPlaqueGeneration_plaqueMaximumSize <- 4000000 # [1 , Inf] maximum number of monomer units a plaque can hold
+amyloidPlaqueGeneration_plaqueSeedProbabilityCurveMax <- .001 # (0 - 1], real max Probability seems to be at x/2
 amyloidPlaqueGeneration_plaqueSeedProbabilityCurveSteepness <- .01  #(0 - Inf) seems to relate to the number of aggregates at which the probability as roughly passed 50% of the max/2 probability
 amyloidPlaqueGeneration_plaqueSeedProbabilityInflectionPoint <- 700 # inflecton point: dimers + aggregate count
 amyloidPlaqueGeneration_plaquePullIntraDendrite <- 11 #[0 , Inf] range of intra dendrite pull from other synapses into the plaque
 amyloidPlaqueGeneration_plaquePullInterDendrite <- 5 #[0 , Inf] range of inter dendrite pull from other synapses into the plaque
-amyloidPlaqueGeneration_plaquePullMaxProb <- 0.5 #[0 , 1] maximum percent of monomers/dimer/aggregate which can be pulled in one step
-amyloidPlaqueGeneration_AggregatesizePullRelation <- .5 #(0 , 1) values close to 0 indicate only large Aggregates are used to fill Plaques
-amyloidPlaqueGeneration_softLimit <- 200 # [0, Inf] soft limit (maximumSize - softLimit) at which a plaque already stops growing in favor of computational performance
+amyloidPlaqueGeneration_plaquePullMaxProb <- 0.2 #[0 , 1] maximum percent of monomers/dimer/aggregate which can be pulled in one step
+amyloidPlaqueGeneration_AggregatesizePullRelation <- .3 #(0 , 1) values close to 0 indicate only large Aggregates are used to fill Plaques
+amyloidPlaqueGeneration_softLimit <- 2000 # [0, Inf] soft limit (maximumSize - softLimit) at which a plaque already stops growing in favor of computational performance
 
 #### NFT Generation ####
-nftGeneration_nftSeedProbability <- .0008 # Initial value for the NFT seed probability. The size from which the generated NFT is drawn is dependent on the aAggregateCount and nft itself
-nftGeneration_nftAcceleration <- .02 #[0, Inf] formula is: sqrt(nft + aggregateSum) / Acceleration. Values < 1 are a speedup, values > 1 is slowdown
-nftGeneration_maxNftGrowth <- 2 # maximum percent of nft growth per step of the nftCutOffMean (but has to be multiplies with the seed proability to yield actual value)
-nftGeneration_nftFlatClearance <- 2 #[0, Inf] flat number of NFT that can be maximally cleaned in one step, with nftFlatClearance/2 * activity being the expected value (beta distribution)
+nftGeneration_nftSeedProbability <- .001 # Initial value for the NFT seed probability. The size from which the generated NFT is drawn is dependent on the aAggregateCount and nft itself
+nftGeneration_nftAcceleration <- .015 #[0, Inf] formula is: sqrt(nft + aggregateSum) / Acceleration. Values < 1 are a speedup, values > 1 is slowdown
+nftGeneration_maxNftGrowth <- 5 # maximum percent of nft growth per step of the nftCutOffMean (but has to be multiplies with the seed proability to yield actual value)
+nftGeneration_nftFlatClearance <- 5 #[0, Inf] flat number of NFT that can be maximally cleaned in one step, with nftFlatClearance/2 * activity being the expected value (beta distribution)
 
 #### NFT Seed Probability Inter Neuron Spread ####
 nftSeedProbabilitySpread_lag <- 300000000 # [0, Inf] Count of NFT at which the probability rise is .5
 nftSeedProbabilitySpread_maxSeedProb <- .003 #[0, 1] maximum nft seed probability which can be reached by a neuron
-nftSeedProbabilitySpread_seedProbMaxRise <- .00005 # [0, 1] maximum nftSeedProbability rise in one step 
+nftSeedProbabilitySpread_seedProbMaxRise <- 000004 # [0, 1] maximum nftSeedProbability rise in one step 
 #plot(rbeta(10000, 10000, nftSeedProbabilitySpread_lag))
 #plot(unlist(lapply(1:synapseActivityUpdate_nftCutOffMean, function(n){75 * rbeta(1, n , nftSeedProbabilitySpread_lag)}))) # probability addition per step depending on number of NFT
 
 
 #### Synapse / Neurons Activity Update #### 
-synapseActivityUpdate_declineStability <- 4000 #shape1 parameter of the beta distribution 
-synapseActivityUpdate_declineStart <- 20000000  #shape2 parameter of the beta distribution 
-synapseActivityUpdate_activityCutOff <- .1 #cut-off value at which the neuron activity is switched to zero and the neuron is also considered dead
+synapseActivityUpdate_declineStability <- 800 #shape1 parameter of the beta distribution 
+synapseActivityUpdate_declineStart <- 300000000 #shape2 parameter of the beta distribution 
+synapseActivityUpdate_activityCutOff <- .2 #cut-off value at which the neuron activity is switched to zero and the neuron is also considered dead
 synapseActivityUpdate_nftCutOffMean <- 20000 #value at which a neuron is considered dead (is calculated as the mean value of the nft matrix). At 20.000 there can be no more then 107374 synapses per neuron, otherwise the model does not work (Integer limit: 2^31 / 20000)
 #plot(unlist(lapply(1:20000, function(x) rbeta(1, declineStability/sqrt(x/10), x^2 / declineStart))), ylim = c(0,1));abline(h = .2)
 

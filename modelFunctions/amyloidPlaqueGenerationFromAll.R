@@ -41,9 +41,14 @@ amyloidPlaqueGenerationFromAll <- function(neurons,
                                     pull[["pullFactor"]][pull[["pullIndex"]]] * plaquePullMaxProb
         )
         
+        # transferMonomer <- rbinom(sum(pull[["pullIndex"]]),
+        #                         l[[aMonomerName]][pull[["pullIndex"]]],
+        #                         pull[["pullFactor"]][pull[["pullIndex"]]] * plaquePullMaxProb
+        # )
+        
         transferAggregate[transferAggregate < 3] <- 0
         maxTransfer <- plaqueMaximumSize - l[[aPlaqueName]][plaqueIndex[i,1], plaqueIndex[i,2]]
-
+        if(any(is.na(transferAggregate))){print(l)}
         if((sum(transferAggregate) - maxTransfer)  > 0){
           transferAggregate <- transferAggregate - ceiling((sum(transferAggregate) - maxTransfer ) / length(transferAggregate))
         }
@@ -60,8 +65,20 @@ amyloidPlaqueGenerationFromAll <- function(neurons,
                                                                                                                           + aMin)
         )
         
+        maxTransfer <- plaqueMaximumSize - l[[aPlaqueName]][plaqueIndex[i,1], plaqueIndex[i,2]]
+        
+        if((sum(transferDimer) - maxTransfer)  > 0){
+          transferDimer <- transferDimer - ceiling((sum(transferDimer) - maxTransfer ) / length(transferDimer))
+        }
+        
         l[[aDimerName]][pull[["pullIndex"]]] <- l[[aDimerName]][pull[["pullIndex"]]] - transferDimer
         l[[aPlaqueName]][plaqueIndex[i,1], plaqueIndex[i,2]] <- l[[aPlaqueName]][plaqueIndex[i,1], plaqueIndex[i,2]] + sum(transferDimer) * 2 
+        
+        # maxTransfer <- plaqueMaximumSize - l[[aPlaqueName]][plaqueIndex[i,1], plaqueIndex[i,2]]
+        # 
+        # if((sum(transferMonomer) - maxTransfer)  > 0){
+        #   transferMonomer <- transferMonomer - ceiling((sum(transferMonomer) - maxTransfer ) / length(transferMonomer))
+        # }
       }
     }
     
@@ -162,7 +179,11 @@ amyloidPlaqueGeneration_getPullMatrix <- function(pos, d, plaquePullIntraDendrit
 }
 
 amyloidPlaqueGeneration_getVec <- function(len){
-  if(len %% 2 == 1){
+  if(len == 2){
+    return(c(0, 1))
+  } else if(len == 1){
+    return(c(0))
+  } else if(len %% 2 == 1){
     n <- floor(len/2)
     return(c(seq(n, 1), 0 , seq(n)))
   } else {

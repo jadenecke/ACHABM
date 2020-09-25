@@ -30,7 +30,8 @@ amyloidDimerDiffusionInterDendrite_ShiftMatrix <- function(size, factor, spread,
   if(spread  <= 0) stop("Spread of 0 (or negative) not possible!")
   if(spreadSD  < .1) stop("Standard deviation of < .1 not possible! This would introduce NaN (result to small).")
   if(size <= 1){stop("Matrix of size of 1 or smaller.")}
-  if(spread > (size - 1) /2) {warning("Spread larger than number of Dendrites. Reducing spread size."); spread <- floor((size - 1) /2)}
+  if(spread > (size - 1) /2) {spread <- floor((size - 1) /2)}
+  if(spread == 0){return(diag(1, size))}
   m <- diag(size)
   r <- runif(1, 1/spreadMaxMultiplyer, spreadMaxMultiplyer)
   sf <- amyloidDimerDiffusionInterDendrite_spreadFactor(spread, factor * r, spreadSD)

@@ -11,29 +11,29 @@ lapply(list.files("modelFunctions",full.names = TRUE), source)
 
 #make Paths and logging stuff:
 logPath <- file.path("G:", "Uni", "SEDS MA Data", "logs")
-logPath <- file.path(logPath, format(Sys.time(), "%Y%m%d_%H%M%S"))
+logPath <- file.path(logPath, paste0(format(Sys.time(), "%Y%m%d_%H%M%S"), "_dummyAD"))
 dir.create(logPath)
 logParamter(logPath =  logPath)
 
 #generate dummy network:
-# source(file.path("networkGeneration", "genN-ClusterNetwork.R"))
-# neurons <- genNClusterNetwork(numberOfCluster = numberOfCluster,
-#                               clusterMinSize = clusterMinSize,
-#                               clusterMaxSize = clusterMaxSize,
-#                               dendritesPerNeuronMin = dendritesPerNeuronMin,
-#                               dendritesPerNeuronMax = dendritesPerNeuronMax,
-#                               synapsesPerDendriteMin = synapsesPerDendriteMin,
-#                               synapsesPerDendriteMax = synapsesPerDendriteMax)
-# 
+source(file.path("networkGeneration", "genN-ClusterNetwork.R"))
+neurons <- genNClusterNetwork(numberOfCluster = numberOfCluster,
+                              clusterMinSize = clusterMinSize,
+                              clusterMaxSize = clusterMaxSize,
+                              dendritesPerNeuronMin = dendritesPerNeuronMin,
+                              dendritesPerNeuronMax = dendritesPerNeuronMax,
+                              synapsesPerDendriteMin = synapsesPerDendriteMin,
+                              synapsesPerDendriteMax = synapsesPerDendriteMax)
+
 
 #generate Beaujoin 2018 Model
-source(file.path("networkGeneration", "genBeaujoin2018.R"))
-neurons <- initiateModel(size = size,
-                         connectionMatrix = conMat,
-                         dendritesPerNeuronMin = 1,
-                         dendritesPerNeuronMax = 3,
-                         synapsesPerDendriteMin = 8,
-                         synapsesPerDendriteMax = 70)
+# source(file.path("networkGeneration", "genBeaujoin2018.R"))
+# neurons <- initiateModel(size = size,
+#                          connectionMatrix = conMat,
+#                          dendritesPerNeuronMin = 1,
+#                          dendritesPerNeuronMax = 3,
+#                          synapsesPerDendriteMin = 8,
+#                          synapsesPerDendriteMax = 70)
 
 # hist(unlist(lapply(neurons, function(l){nrow(l$conMat)})))
 # table(unlist(lapply(neurons, function(l){ncol(l$conMat)})))
@@ -106,7 +106,7 @@ for(i in 1:numberOfSteps){
                                     upperBound = amyloidMonomerCleaning_upperBound,
                                     currentStep = i,
                                     declineFactor = amyloidMonomerCleaning_declineFactor,
-                                    declineFlag = FALSE,
+                                    declineFlag = TRUE,
                                     matName = "aMonomer",
                                     activityName = "activity"
   )
@@ -268,10 +268,9 @@ for(i in 1:numberOfSteps){
   alivePerc[i] <- mean(unlist(lapply(neurons, "[", "alive")))
   print(paste0("Percent Alive after current Step: ", round(alivePerc[i] * 100, 1), "%"))
   
-  print("!!!!logging not active!!!!")
-  # logModel(neurons = neurons, logPath =  logPath, step = i)
-  # logSampleNeuron(neurons = neurons, logPath =  logPath, t = i, index = c(1, 20, 40, 80, 100))
-  
+  logModel(neurons = neurons, logPath =  logPath, step = i)
+  logSampleNeuron(neurons = neurons, logPath =  logPath, t = i, index = c(1, 20, 40, 80, 100))
+
   #lapply(neurons, function(l){if(any(unlist(c(l$aMonomer, l$aDimer, l$aAggregateCount, l$aAggregateSum, l$aPlaque, l$nft, l$nftSeedProbability)) < 0)) stop(l$id)})
   #lapply(neurons, function(l){if(any(unlist(c(l$nftSeedProbability)) > 1)) stop(l$id)})
 }

@@ -14,14 +14,17 @@ logModel <- function(neurons, logPath, step){
                 return(list(
                   id = l$id,
                   area = l$area,
-                  coords = ifelse(is.null(l$coords), no = l$coords, yes = NULL),
+                  areaName = l$areaName,
+                  coords = ifelse(is.null(l$coords), no = l$coords, yes = NA),
+                  numberOfsynapses = length(l$conMat),
+                  connectionsTo = l$dendriteAreas,
                   aMonomerSum = sum(l$aMonomer),
-                  aDimerSUm = sum(l$aDimer),
+                  aDimerSum = sum(l$aDimer),
                   aAggregateCountSum = sum(l$aAggregateCount),
                   aAggregateSumSum = sum(l$AggregateSum),
                   aPlaqueNumber = sum(l$aPlaque != 0),
                   aPlaqueSum = sum(l$aPlaque),
-                  nftSeedProability = l$nftSeedProbability,
+                  nftSeedProbability = l$nftSeedProbability,
                   nftSum = sum(l$nft),
                   alive = l$alive,
                   activity = mean(l$activity),
@@ -31,7 +34,7 @@ logModel <- function(neurons, logPath, step){
               
   )
   
-  save(log, file = file.path(logPath, paste0("modelLog_", step, ".RData")))
+  saveRDS(log, file = file.path(logPath, paste0("modelLog_", step, ".rds")))
   
   return(NULL)
 }

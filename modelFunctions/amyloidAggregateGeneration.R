@@ -18,8 +18,8 @@ amyloidAggregateGeneration <- function(neurons,
                                        matAggregateSumName = "aAggregateSum"){
   require("parallel")
   index <- sapply(neurons, function(l) {sum(l[[matAggregateCountName]]) > 0})
-  neurons[index] <- amyloidAggregateGeneration_aggregateGrowthByDimer(neurons[index], aggregateGrowthProbabiltyMax, aggregateGrowthProbabilityCurveSteepness, aggregateGrowthDelay, aggregateMaxSize, matDimerName, matAggregateCountName, matAggregateSumName)
   neurons[index] <- amyloidAggregateGeneration_aggregateGrowthByMonomer(neurons[index], aggregateGrowthProbabiltyMax, aggregateGrowthProbabilityCurveSteepness, aggregateGrowthDelay, aggregateMaxSize, matMonomerName, matAggregateCountName, matAggregateSumName)
+  # neurons[index] <- amyloidAggregateGeneration_aggregateGrowthByDimer(neurons[index], aggregateGrowthProbabiltyMax, aggregateGrowthProbabilityCurveSteepness, aggregateGrowthDelay, aggregateMaxSize, matDimerName, matAggregateCountName, matAggregateSumName)
   neurons[index] <- amyloidAggregateGeneration_aggregateDissaggregationIntoMonomer(neurons[index], maxDecline, stability, matMonomerName, matAggregateCountName, matAggregateSumName, aggregateMaxSize)
   #neurons <- amyloidAggregateGeneration_aggregateDeseeding(neurons, matMonomerName, matAggregateCountName, matAggregateSumName)
   neurons <- amyloidAggregateGeneration_aggregateSeeding(neurons, seedingProbabiltyMax, seedingProbabilityCurveSteepness, seedingProbabilityCurveInflectionPoint, matMonomerName,  matDimerName, matAggregateCountName, matAggregateSumName)
@@ -96,9 +96,9 @@ amyloidAggregateGeneration_aggregateDeseeding <- function(neurons, maxDecline, s
   #currently no de-seeding, until I find / remember reference
 }
 # 
-# 
+# # 
 # logCurveMean <- function(a, b, maxDecline, stability){
-#   mean(maxDecline / (1 + exp((stability / (a * 20 / b)) * (1 / (seq(b) / b) - (1 - (b / (a * 20)))))))
+#   mean(maxDecline / (1 + exp((stability / (a * 24 / b)) * (1 / (seq(b) / b) - (1 - (b / (a * 24)))))))
 # }
 # logCurveMean2 <- function(a,b, maxDecline, stability){
 #   maxDecline / (1 + exp(stability*(b/20/a) * (.5 + (b/20/a))))
@@ -121,20 +121,20 @@ amyloidAggregateGeneration_aggregateDeseeding <- function(neurons, maxDecline, s
 # for(i in 1:nrow(dat)){dat$ind2[i] <- logCurveMean2(dat$Var1[i], dat$Var2[i], maxDecline, stability)}
 # for(i in 1:nrow(dat)){dat$ind3[i] <- logCurveMean3(dat$Var1[i], dat$Var2[i], maxDecline, stability)}
 # plot(dat$ind2, dat$ind3)
-
-
-# b <- 2000 #actual value does not matter
-# maxDecline <- .3 # [0 - 1], real max Decline seems to be maxDecline/2 as the inflections point for the highest declining curve is at b
-# stability <- 3 # (0 - Info) stability, hard to describe, but the range of 2-6 seems reasonable, at higher or lower values, the dependencies on a and b decline drastically
+# 
+# 
+# b <- 4000 #actual value does not matter
+# maxDecline <- .07 # [0 - 1], real max Decline seems to be maxDecline/2 as the inflections point for the highest declining curve is at b
+# stability <- 5 # (0 - Info) stability, hard to describe, but the range of 2-6 seems reasonable, at higher or lower values, the dependencies on a and b decline drastically
 # 
 # a <- floor(b/3)
-# plot(logCurve(a,b, maxDecline, stability), col = "red")
+# plot(logCurveMean(a,b, maxDecline, stability), col = "red", ylim = c(0, .1))
 # a <- floor(b/9)
-# points(logCurve(a,b, maxDecline, stability), col ="blue")
+# points(logCurveMean(a,b, maxDecline, stability), col ="blue")
 # a <- floor(b/14)
-# points(logCurve(a,b, maxDecline, stability), col ="green")
+# points(logCurveMean(a,b, maxDecline, stability), col ="green")
 # a <- floor(b/20)
-# points(logCurve(a,b, maxDecline, stability), col ="purple")
+# points(logCurveMean(a,b, maxDecline, stability), col ="purple")
 # curve3d(logCurveMean2(x,y,maxDecline,stability), from= c(1,1), to = c(20, 400), n = c(15, 150), sys3d = "image")
 # curve3d(logCurveMean2(x,y,maxDecline,stability), from= c(1,1), to = c(20, 400), n = c(15, 150), sys3d = "contour", add =TRUE)
 
