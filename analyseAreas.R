@@ -1,5 +1,6 @@
-logFolder <- file.path("results")
-logNumber <- "20200925_035231_dummyControl"
+#logFolder <- file.path("results")
+logFolder <- file.path("G:", "Uni", "SEDS MA Data", "logs")
+logNumber <- "20200927_024945_brainADIntervention1"
 
 logPath <- file.path(logFolder, logNumber)
 files <- list.files(logPath, full.names = T, pattern = ".rds")

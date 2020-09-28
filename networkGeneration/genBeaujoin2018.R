@@ -40,7 +40,8 @@ conMat[,"T_CA23"] <- conMat[,"T_CA23"] + round((1 / (1+ratioTail)) * conMat[,"T_
 
 conMat <- conMat[!grepl("LAMO", colnames(conMat), ignore.case = TRUE), !grepl("LAMO", colnames(conMat), ignore.case = TRUE)]
 diag(conMat) <- 0
-conMat <- round(sqrt(conMat))*100
+conMatOriginal <- conMat
+conMat <- round(sqrt(conMat))*25
 
 # library(reshape2)
 # library(ggplot2)
@@ -53,8 +54,9 @@ conMat <- round(sqrt(conMat))*100
 #EC size based on Price et al., 2001
 #         H_EC      H_SUB     H_CA1   H_CA23   H_DG     B_SUB   B_CA1   B_CA23   B_DG     T_SUB   T_CA1   T_CA23  T_DG
 size <- c(11850000, 1402170, 1223069, 313358, 2975444, 1123520, 1501601, 278920, 3240514, 144310, 2111441, 308864, 3244665)
+sizeOriginal <- size
 #size <- round(size / 17000)
-size <- round(sqrt(size) / 8)
+size <- round(sqrt(size) / 10)
 names(size) <- rownames(conMat)
 
 
